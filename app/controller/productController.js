@@ -1,4 +1,6 @@
 import { Product } from '../models/productModel.js';
+import { Category } from '../models/categoryModel.js';
+import { Tag } from '../models/tagModel.js';
 import path from 'path';
 import fs from 'fs';
 // import image from '../../public/image';
@@ -28,8 +30,8 @@ export const saveProduct = async (req, res) => {
   const name = req.body.title;
   let price = req.body.price;
   let description = req.body.description;
-  const tags = req.body.tags;
-  const category = req.body.category;
+  const tagID = req.body.tags;
+  const categoryID = req.body.category;
   const file = req.files.file;
   const fileSize = file.data.length;
   const ext = path.extname(file.name);
@@ -43,6 +45,9 @@ export const saveProduct = async (req, res) => {
   file.mv(`./public/image/${fileName}`, async (err) => {
     if (err) return res.status(500).json({ msg: err.message });
     try {
+      const category = await Category.findOne(categoryID);
+      const tags = await Tag.findOne(tagID);
+      // const category = await Category.findOne(categoryID);
       await Product.create({ name: name, image: fileName, url: url, price: price, description: description, tags: tags, category: category });
       res.status(201).json({ msg: 'Product Created Successfuly' });
     } catch (error) {
