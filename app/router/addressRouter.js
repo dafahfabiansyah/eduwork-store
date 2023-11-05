@@ -28,7 +28,7 @@ router.post('/', policyCheck('create', 'DeliveryAddress'), async (req, res) => {
 
 // read
 // Mendapatkan semua alamat
-router.get('/', policyCheck('read', 'DeliveryAddress'), async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const addresses = await Address.find();
     return res.status(200).send(addresses);
