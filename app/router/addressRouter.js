@@ -3,9 +3,9 @@ import { Address } from '../models/addressModel.js';
 import { policyCheck } from '../utils/token/decodeToken.js';
 
 const router = express.Router();
-
+// policyCheck('create', 'DeliveryAddress'),
 // create
-router.post('/', policyCheck('create', 'DeliveryAddress'), async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newAddress = {
       name: req.body.name,
@@ -38,7 +38,8 @@ router.get('/', async (req, res) => {
 });
 
 // read by ID
-router.get('/:id', policyCheck('read', 'DeliveryAddress'), async (req, res) => {
+// policyCheck('read', 'DeliveryAddress'),
+router.get('/:id', async (req, res) => {
   try {
     const address = await Address.findById(req.params.id);
     if (!address) {
@@ -51,7 +52,8 @@ router.get('/:id', policyCheck('read', 'DeliveryAddress'), async (req, res) => {
 });
 
 // update
-router.put('/:id', policyCheck('update', 'DeliveryAddress'), async (req, res) => {
+// policyCheck('update', 'DeliveryAddress'),
+router.put('/:id', async (req, res) => {
   try {
     const updatedAddress = {
       name: req.body.name,
@@ -75,7 +77,8 @@ router.put('/:id', policyCheck('update', 'DeliveryAddress'), async (req, res) =>
 });
 
 // delete
-router.delete('/:id', policyCheck('delete', 'DeliveryAddress'), async (req, res) => {
+//  policyCheck('delete', 'DeliveryAddress')
+router.delete('/:id', async (req, res) => {
   try {
     const address = await Address.findByIdAndDelete(req.params.id);
 

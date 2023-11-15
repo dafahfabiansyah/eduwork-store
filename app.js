@@ -11,6 +11,7 @@ import cartRouter from './app/router/cartRouter.js';
 import cors from 'cors';
 import { decodeToken } from './app/utils/token/decodeToken.js';
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 
 const app = express();
@@ -18,6 +19,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text({ type: 'text/html' }));
 app.use(fileUpload());
 app.use(express.static('public'));
 app.get('/', (req, res) => {

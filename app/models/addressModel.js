@@ -35,4 +35,4 @@ const addressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Address = mongoose.model('DeliveryAddress', addressSchema);
+export const Address = mongoose.model('Address', addressSchema);
