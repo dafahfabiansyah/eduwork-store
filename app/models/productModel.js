@@ -16,7 +16,14 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     image: String,
-
+    // category: {
+    //   id: Number,
+    //   name: String,
+    // },
+    // tags: {
+    //   id: Number,
+    //   name: String,
+    // },
     category: {
       type: Schema.Types.ObjectId,
       // type: String,

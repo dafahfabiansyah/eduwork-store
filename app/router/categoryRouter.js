@@ -5,7 +5,8 @@ import { policyCheck } from '../utils/token/decodeToken.js';
 const router = express.Router();
 
 // create
-router.post('/', policyCheck('create', 'Category'), async (req, res) => {
+// policyCheck('create', 'Category'),
+router.post('/', async (req, res) => {
   try {
     if (!req.body.name) {
       return res.status(400).send({

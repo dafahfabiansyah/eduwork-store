@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const categorySchema = new mongoose.Schema({
   name: {
     type: String,
-    minLength: 3,
-    maxLength: 20,
-    required: true,
+    // minLength: 3,
+    // maxLength: 20,
+    // required: true,
   },
 });
 
