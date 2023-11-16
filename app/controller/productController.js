@@ -3,6 +3,7 @@ import { Category } from '../models/categoryModel.js';
 import { Tag } from '../models/tagModel.js';
 import path from 'path';
 import fs from 'fs';
+import { title } from 'process';
 // import image from '../../public/image';
 
 export const getProducts = async (req, res) => {
@@ -59,7 +60,7 @@ export const saveProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const product = await Product.findOne({
-      _id: req.params.id, // Correct the key name to "_id"
+      _id: req.params.id,
     });
 
     if (!product) return res.status(404).json({ msg: 'No Data Found' });
@@ -78,12 +79,17 @@ export const updateProduct = async (req, res) => {
       if (fileSize > 5000000) return res.status(422).json({ msg: 'Image must be less than 5 MB' });
 
       const filepath = `./public/images/${product.image}`;
-      await fs.unlink(filepath); // Use await when calling fs.unlink to make it asynchronous
+      await fs.unlink(filepath);
 
       await file.mv(`./public/images/${fileName}`);
     }
 
     const name = req.body.title;
+    const description = req.body.description;
+    const price = req.body.price;
+    const tagID = req.body.tags;
+    const categoryID = req.body.category;
+
     const url = `${req.protocol}://${req.get('host')}/images/${fileName}`;
 
     // Assuming you have category and tag available in req.body
@@ -93,7 +99,7 @@ export const updateProduct = async (req, res) => {
     // Use findByIdAndUpdate to simplify the update operation
     await Product.findByIdAndUpdate(
       req.params.id,
-      { name, image: fileName, url, category, tag },
+      { name: name, image: fileName, url, category: categoryID, tag: tagID, description: description, price: price },
       { new: true } // To return the updated document
     );
 
@@ -111,8 +117,8 @@ export const deleteProduct = async (req, res) => {
   if (!product) return res.status(404).json({ msg: 'No Data Found' });
 
   try {
-    // const filepath = `./public/images/${product.image}`;
-    // fs.unlinkSync(filepath);
+    const filepath = `./public/images/${product.image}`;
+    fs.unlinkSync(filepath);
     await Product.deleteOne({
       _id: req.params.id,
     });
